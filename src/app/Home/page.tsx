@@ -65,15 +65,22 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
   const aboutLeftX = useTransform(scrollYProgress, [0.15, 0.3], isMobile ? [-50, 0] : [-150, 0]);
   const aboutLeftY = useTransform(scrollYProgress, [0.45, 0.55], isMobile ? [0, -50] : [0, 0]);
 
-  // RIGHT: Stays longer on mobile, fades out later, and slides up when left leaves
+// RIGHT OPACITY: Stays visible until the very end of the scroll container
   const aboutRightOpacity = useTransform(
     scrollYProgress, 
-    isMobile ? [0.15, 0.25, 0.75, 0.85] : [0.15, 0.3, 0.6, 0.7], 
+    // Fades out between 90% (0.9) and 100% (1.0) on mobile
+    isMobile ? [0.15, 0.25, 0.80, 1] : [0.15, 0.3, 0.6, 0.7], 
     [0, 1, 1, 0]
   );
   const aboutRightX = useTransform(scrollYProgress, [0.15, 0.3], isMobile ? [50, 0] : [150, 0]);
-  const aboutRightY = useTransform(scrollYProgress, [0.45, 0.55], isMobile ? [0, -200] : [0, 0]);
-
+// RIGHT Y-AXIS: Slides up exactly when the left side leaves
+  const aboutRightY = useTransform(
+    scrollYProgress, 
+    // Left finishes fading out at 0.55, so we start sliding Right up at 0.55
+    isMobile ? [0.55, 0.8] : [0, 0], 
+    // Moves from 0px to -100px (adjust -100 to however far up you want it to go)
+    isMobile ? [0, -100] : [0, 0]
+  );
 
   return (
     <main ref={containerRef} className="relative w-full h-[300vh] bg-white overflow-clip">
