@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const About = () => {
   return (
-    <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-start py-20 relative z-20">
+    <div className="min-h-screen w-full bg-gray-50 flex flex-col items-center justify-start py-20 relative z-20 overflow-x-clip">
       
       {/* Main CTA Title */}
       <motion.div 
@@ -31,12 +31,13 @@ const About = () => {
       {/* BENTO GRID */}
       <div className="w-full max-w-7xl px-6 sm:px-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         
-        {/* 1. Machine Models */}
+   {/* 2. Maggam & Add-ons */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
+          transition={{ delay: 0.2 }}
+          // Ensure mx-[10px] is REMOVED from this line:
           className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 flex flex-col hover:shadow-xl transition-shadow"
         >
           <h3 className="text-xl font-bold text-[#2B237C] mb-4">RK 12-Needle Models</h3>

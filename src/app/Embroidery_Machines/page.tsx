@@ -4,9 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-import machine1 from "@/assets/images/m1.png";
-import machine2 from "@/assets/images/m2.png";
-import machine3 from "@/assets/images/m3.png";
+import machine1 from "@/assets/images/m1.jpeg";
+import machine2 from "@/assets/images/m2.jpeg";
+import machine3 from "@/assets/images/m3.jpeg";
+import { ArrowLeft } from "lucide-react";
 
 const machines = [
   {
@@ -58,7 +59,7 @@ const machines = [
 
 export default function MachinesPage() {
   return (
-    <div className="min-h-screen bg-[#f5f7fb] py-10 md:py-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
+    <div className="min-h-screen bg-[#f5f7fb] py-[150px] md:py-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-center">
       
       {/* HEADER */}
       <div className="text-center max-w-2xl mx-auto mb-10 md:mb-12">

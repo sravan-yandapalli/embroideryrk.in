@@ -3,6 +3,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
 import bg from "@/assets/images/form-bg.webp";
 
@@ -73,7 +75,7 @@ export default function DemoBookingPage() {
   };
 
   return (
-    <section className="relative min-h-screen w-full flex items-center justify-center px-4 py-16 overflow-hidden">
+    <section className="relative min-h-screen w-screen max-w-full flex items-center justify-center py-16 overflow-hidden">
       
       {/* Background */}
       <Image
@@ -118,6 +120,7 @@ export default function DemoBookingPage() {
               className="w-full min-w-0 mt-1 px-4 py-3 rounded-xl bg-gray-200 text-sm border border-transparent focus:border-[#2B237C] focus:bg-white outline-none box-border"
             />
           </div>
+
 
           {/* Phone */}
           <div>

@@ -12,11 +12,11 @@ import blue from "@/assets/images/blue.svg";
 import inner from "@/assets/images/inner.svg";
 import outer from "@/assets/images/outer.svg";
 import design1 from "@/assets/images/design1.png";
-import founderImg from "@/assets/images/founder.png"; 
+import founderImg from "@/assets/images/founder.png";
 
 const EmbroideryShowcase = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
+
   // --- RESPONSIVE STATE ---
   const [windowWidth, setWindowWidth] = useState(1200);
   const [mounted, setMounted] = useState(false);
@@ -24,7 +24,8 @@ const EmbroideryShowcase = () => {
   useEffect(() => {
     setMounted(true);
     const handleResize = () => setWindowWidth(window.innerWidth);
-    handleResize(); 
+    handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -45,10 +46,10 @@ const EmbroideryShowcase = () => {
   const homeY = useTransform(scrollYProgress, [0, 0.2], [0, -50]);
 
   // --- MACHINE & CIRCLES ---
-const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0.75, 1.2]);
+  const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0.75, 1.2]);
   const machineY = useTransform(
-    scrollYProgress, 
-    [0, 0.4, 0.7, 1], 
+    scrollYProgress,
+    [0, 0.4, 0.7, 1],
     isMobile ? [0, -120, -180, -600] : [0, -230, -290, -1000]
   );
 
@@ -58,26 +59,27 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
   // --- PHASE 2: ABOUT CONTENT ---
   // LEFT: Fades out earlier on mobile
   const aboutLeftOpacity = useTransform(
-    scrollYProgress, 
-    isMobile ? [0.15, 0.25, 0.45, 0.55] : [0.15, 0.3, 0.6, 0.7], 
+    scrollYProgress,
+    isMobile ? [0.15, 0.25, 0.45, 0.55] : [0.15, 0.3, 0.6, 0.7],
     [0, 1, 1, 0]
   );
   const aboutLeftX = useTransform(scrollYProgress, [0.15, 0.3], isMobile ? [-50, 0] : [-150, 0]);
   const aboutLeftY = useTransform(scrollYProgress, [0.45, 0.55], isMobile ? [0, -50] : [0, 0]);
 
-// RIGHT OPACITY: Stays visible until the very end of the scroll container
+  // RIGHT OPACITY: Stays visible until the very end of the scroll container
   const aboutRightOpacity = useTransform(
-    scrollYProgress, 
+    scrollYProgress,
     // Fades out between 90% (0.9) and 100% (1.0) on mobile
-    isMobile ? [0.15, 0.25, 0.80, 1] : [0.15, 0.3, 0.6, 0.7], 
+    isMobile ? [0.15, 0.25, 0.80, 1] : [0.15, 0.3, 0.6, 0.7],
     [0, 1, 1, 0]
   );
   const aboutRightX = useTransform(scrollYProgress, [0.15, 0.3], isMobile ? [50, 0] : [150, 0]);
-// RIGHT Y-AXIS: Slides up exactly when the left side leaves
+  
+  // RIGHT Y-AXIS: Slides up exactly when the left side leaves
   const aboutRightY = useTransform(
-    scrollYProgress, 
+    scrollYProgress,
     // Left finishes fading out at 0.55, so we start sliding Right up at 0.55
-    isMobile ? [0.55, 0.8] : [0, 0], 
+    isMobile ? [0.55, 0.8] : [0, 0],
     // Moves from 0px to -100px (adjust -100 to however far up you want it to go)
     isMobile ? [0, -100] : [0, 0]
   );
@@ -104,13 +106,13 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
 
             <motion.div
               style={{ scale: machineScale, y: machineY }}
-              className="relative z-10 flex flex-col items-center mt-[300px] sm:mt-[600px] lg:mt-[650px]"
+              className="relative z-10 flex flex-col items-center mt-[360px] sm:mt-[600px] lg:mt-[500px]"
             >
               <div className="relative flex flex-col items-center">
                 
                 {/* INITIAL MOUNT ANIMATION */}
-                <motion.div 
-                   layoutId="embroidery-machine" 
+                <motion.div
+                   layoutId="embroidery-machine"
                    className="relative z-40"
                    initial={{ scale: 0, opacity: 0, y: 50 }}
                    animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -119,14 +121,13 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
                   <Image
                     src={machine}
                     alt="Embroidery Machine"
-                    className="w-[180px] sm:w-[280px] lg:w-[450px] object-contain drop-shadow-2xl"
+                    className="w-[320px] sm:w-[280px] lg:w-[450px] object-contain drop-shadow-2xl"
                     priority
                   />
                 </motion.div>
               </div>
               
-
-                <div className="absolute bottom-[5%] sm:bottom-[5%] w-[140px] sm:w-[250px] lg:w-[300px] h-[30px] bg-black/30 blur-[18px] rounded-full -z-10" />
+              <div className="absolute bottom-[20%] sm:bottom-[20%] w-[140px] sm:w-[250px] lg:w-[300px] h-[30px] bg-black/30 blur-[18px] rounded-full -z-10" />
             </motion.div>
           </div>
 
@@ -183,6 +184,7 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
                     </div>
                     <p className="text-[12px] sm:text-lg text-gray-700 font-medium px-[30px] sm:px-0">Empowering Women Through Embroidery Technology</p>
                     <p className="text-[13px] sm:text-base text-gray-500 mt-2 px-4 sm:px-0">Start your own embroidery business with high-performance machines, complete training, and full technical support.</p>
+                
                   </motion.div>
                 </div>
                 
@@ -214,7 +216,7 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
                 
                 {/* LEFT: Founder Story with Image */}
                 <motion.div 
-                  style={{ opacity: aboutLeftOpacity, x: aboutLeftX, y: aboutLeftY }} 
+                  style={{ opacity: aboutLeftOpacity, x: aboutLeftX, y: aboutLeftY }}
                   className="flex-1 bg-white/92 p-6 sm:p-8 rounded-2xl shadow-sm backdrop-blur-sm"
                 >
                   {/* Profile Header Block */}
@@ -228,7 +230,7 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
                     </div>
                     <div className="flex flex-col justify-center pt-2">
                       <h3 className="text-sm sm:text-base font-bold uppercase tracking-wider text-gray-500 mb-1">Founder & CEO</h3>
-                      <h2 className="text-xl sm:text-2xl font-extrabold text-[#2B237C]">Mrs. Mahalakshmi Garu</h2>
+                      <h2 className="text-xl sm:text-2xl font-extrabold text-[#2B237C]">Mrs. Ronanki Kavitha Kumari</h2>
                     </div>
                   </div>
 
@@ -244,7 +246,7 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
                 
                 {/* RIGHT: Mission, Quote & Stats */}
                 <motion.div 
-                  style={{ opacity: aboutRightOpacity, x: aboutRightX, y: aboutRightY }} 
+                  style={{ opacity: aboutRightOpacity, x: aboutRightX, y: aboutRightY }}
                   className="flex-1 text-center lg:text-left bg-white/80 p-6 sm:p-8 rounded-2xl shadow-sm backdrop-blur-sm"
                 >
                   <blockquote className="italic font-medium text-lg sm:text-xl border-l-4 border-[#2B237C] pl-4 mb-6 text-gray-800">
@@ -275,26 +277,25 @@ const machineScale = useTransform(scrollYProgress, [0, 0.4, 0.7, 1], [1, 0.75, 0
               </div>
             </section>
 
-{/* 4. Contact & Location Banner (Spans Full Width) */}
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          // Removed 'h-screen' and adjusted margin-top for a cleaner flow
-          className="lg:col-span-3 bg-white p-8 sm:p-10 rounded-3xl shadow-lg border border-gray-100 flex flex-col lg:flex-row items-center justify-between gap-8 mt-[250px] hover:shadow-xl transition-shadow"
-        >
-          <div className="flex-1 text-center lg:text-left">
-            <h3 className="text-3xl font-black text-[#2B237C] mb-3">Visit RK Enterprises</h3>
-            <p className="text-gray-600 text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Door No: 39-14-11/1, Near More Super Market, Beside SBI, Birla Junction, Kalinganagar, Madhavadhara, Visakhapatnam, Andhra Pradesh 530007
-            </p>
-            <div className="mt-4 inline-block bg-green-100 text-green-800 text-sm font-bold px-4 py-1.5 rounded-full">
-              Hours: Open ⋅ Closes 9:00 PM
-            </div>
-          </div>
-          
-        </motion.div>
+            {/* 4. Contact & Location Banner (Spans Full Width) */}
+            {/* FIXED GAP: Swapped mt-[250px] to mt-12 lg:mt-[250px] and added mx-6 lg:mx-10 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="lg:col-span-3 bg-white p-8 sm:p-10 rounded-3xl shadow-lg border border-gray-100 flex flex-col lg:flex-row items-center justify-between gap-8 mt-[200px] lg:mt-[250px] mx-6 lg:mx-10 hover:shadow-xl transition-shadow pointer-events-auto"
+            >
+              <div className="flex-1 text-center lg:text-left">
+                <h3 className="text-3xl font-black text-[#2B237C] mb-3">Visit RK Enterprises</h3>
+                <p className="text-gray-600 text-base max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                  Door No: 39-14-11/1, Near More Super Market, Beside SBI, Birla Junction, Kalinganagar, Madhavadhara, Visakhapatnam, Andhra Pradesh 530007
+                </p>
+                <div className="mt-4 inline-block bg-green-100 text-green-800 text-sm font-bold px-4 py-1.5 rounded-full">
+                  Hours: Open ⋅ Closes 9:00 PM
+                </div>
+              </div>
+            </motion.div>
 
           </div>
         </>

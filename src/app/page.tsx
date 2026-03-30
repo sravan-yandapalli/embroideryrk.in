@@ -1,19 +1,24 @@
-import Navbar from "@/components/Navabar";
 import Home from "./Home/page";
 import About from "./About/page";
 import DemoBookingPage from "./Form/page";
 import MachinesPage from "./Embroidery_Machines/page";
-import Fotter from "./Fotter/page";
+import Footer from "@/components/Fotter";
+import Materials from "@/app/Materials/page" 
+import Slide from "./Slide/page"
+import FloatingActions from "@/components/Float";
 
 export default function Page() {
   return (
-    <main className="min-h-[80vh]">
-      <Navbar />
+    <div className="flex flex-col w-full overflow-x-clip relative">
       <Home />
+      <Slide />
       <About />
-      <DemoBookingPage/>
-      <MachinesPage/>
-      <Fotter/>
-    </main>
+      <DemoBookingPage />
+      <MachinesPage />
+      <Materials />
+      <Footer />
+      
+      <FloatingActions />
+    </div>
   );
 }
