@@ -53,7 +53,7 @@ export default function DemoBookingPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const res = await fetch("/api/demo", {
+    const res = await fetch("/api", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
