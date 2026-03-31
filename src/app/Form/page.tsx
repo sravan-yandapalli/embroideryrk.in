@@ -3,10 +3,8 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-
-import bg from "@/assets/images/form-bg.webp";
+// Make sure this path matches where your actual background image is stored
+import bg from "@/assets/images/form-bg.webp"; 
 
 export default function DemoBookingPage() {
   const [form, setForm] = useState({
@@ -17,15 +15,13 @@ export default function DemoBookingPage() {
   });
 
   const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); // Added to prevent double-clicks
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setOpen(false);
       }
     };
@@ -39,9 +35,7 @@ export default function DemoBookingPage() {
     "RK1201 (Top End Model) – Auto Converter",
   ];
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
@@ -52,25 +46,31 @@ export default function DemoBookingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    const res = await fetch("/api", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(form),
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert("Form submitted successfully!");
-      setForm({
-        name: "",
-        phone: "",
-        email: "",
-        machine: "",
+    try {
+      // Pointing directly to our /api folder as discussed
+      const res = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
       });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Demo booked successfully! Our team will contact you shortly.");
+        // Reset form after successful submission
+        setForm({ name: "", phone: "", email: "", machine: "" });
+      } else {
+        alert(`Failed to book demo: ${data.message}`);
+      }
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -104,12 +104,9 @@ export default function DemoBookingPage() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           {/* Name */}
           <div>
-            <label className="text-sm font-semibold text-gray-700">
-              Full Name
-            </label>
+            <label className="text-sm font-semibold text-gray-700">Full Name</label>
             <input
               type="text"
               name="name"
@@ -121,12 +118,9 @@ export default function DemoBookingPage() {
             />
           </div>
 
-
           {/* Phone */}
           <div>
-            <label className="text-sm font-semibold text-gray-700">
-              Phone Number
-            </label>
+            <label className="text-sm font-semibold text-gray-700">Phone Number</label>
             <input
               type="tel"
               name="phone"
@@ -140,9 +134,7 @@ export default function DemoBookingPage() {
 
           {/* Email */}
           <div>
-            <label className="text-sm font-semibold text-gray-700">
-              Email Address
-            </label>
+            <label className="text-sm font-semibold text-gray-700">Email Address</label>
             <input
               type="email"
               name="email"
@@ -155,12 +147,9 @@ export default function DemoBookingPage() {
 
           {/* Custom Dropdown */}
           <div ref={dropdownRef}>
-            <label className="text-sm font-semibold text-gray-700">
-              Select Machine
-            </label>
+            <label className="text-sm font-semibold text-gray-700">Select Machine</label>
 
             <div className="relative mt-1">
-              {/* Trigger */}
               <button
                 type="button"
                 onClick={() => setOpen(!open)}
@@ -172,7 +161,6 @@ export default function DemoBookingPage() {
                 <span className="text-gray-500">▼</span>
               </button>
 
-              {/* Dropdown */}
               {open && (
                 <div className="absolute z-50 mt-2 w-full bg-white border rounded-xl shadow-lg max-h-48 overflow-y-auto">
                   {machines.map((item) => (
@@ -192,9 +180,12 @@ export default function DemoBookingPage() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full mt-3 bg-[#2B237C] text-white py-3 rounded-xl font-bold hover:bg-[#1f1959] transition"
+            disabled={isSubmitting}
+            className={`w-full mt-3 text-white py-3 rounded-xl font-bold transition ${
+              isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-[#2B237C] hover:bg-[#1f1959]"
+            }`}
           >
-            Submit Booking
+            {isSubmitting ? "Submitting..." : "Submit Booking"}
           </button>
 
           <p className="text-xs text-gray-400 text-center">
