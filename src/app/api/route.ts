@@ -4,17 +4,6 @@ import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 export const dynamic = "force-dynamic";
 
-// Explicitly providing the credentials to bypass Next.js isolation
-const client = new DynamoDBClient({
-  region: process.env.REGION || "ap-south-1",
-  credentials: {
-    accessKeyId: process.env.APP_AWS_ACCESS_KEY as string,
-    secretAccessKey: process.env.APP_AWS_SECRET_KEY as string,
-  },
-});
-
-const docClient = DynamoDBDocumentClient.from(client);
-
 export async function POST(req: Request) {
   try {
     const data = await req.json();
@@ -25,6 +14,13 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+
+    // KEYLESS INITIALIZATION inside the function
+    const client = new DynamoDBClient({
+      region: process.env.REGION || "ap-south-1",
+    });
+
+    const docClient = DynamoDBDocumentClient.from(client);
 
     const params = {
       TableName: process.env.DYNAMODB_TABLE_NAME || "MachineBooking",
