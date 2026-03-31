@@ -3,7 +3,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-// Make sure this path matches where your actual background image is stored
 import bg from "@/assets/images/form-bg.webp"; 
 
 export default function DemoBookingPage() {
